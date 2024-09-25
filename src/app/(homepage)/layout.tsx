@@ -7,7 +7,7 @@ import { PlanSection } from "@/components/plans-section";
 import { EE, O2, Three, Vodafone, WhiteLogo } from "@/components/svgs";
 import { Underline } from "@/components/underline-wrapper";
 import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function HomePageLayout({
   children,
@@ -131,7 +131,9 @@ export default function HomePageLayout({
         </div>
       </div>
       <FeatureSection />
-      <PlanSection>{children}</PlanSection>
+      <Suspense fallback={null}>
+        <PlanSection>{children}</PlanSection>
+      </Suspense>
       <HowItWorks />
       <FAQs />
       <Benefits />
