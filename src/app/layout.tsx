@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
+import { Inter } from "next/font/google";
 
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-inter",
+});
 const gilroyLight = localFont({
   src: "./fonts/Gilroy-Light.ttf",
   variable: "--font-gilroy-light",
@@ -33,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${gilroy.variable} ${gilroyBold.variable} ${gilroyLight.variable} ${gilroyMedium.variable}`}
+      className={`${inter.variable} ${gilroy.variable} ${gilroyBold.variable} ${gilroyLight.variable} ${gilroyMedium.variable}`}
     >
       <body className=" bg-white text-black">
         <div className="font-gilroy">

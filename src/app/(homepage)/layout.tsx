@@ -1,16 +1,27 @@
+import { Benefits } from "@/components/benefits";
+import { FAQs } from "@/components/faqs";
 import { FeatureSection } from "@/components/feature-section";
+import { Footer } from "@/components/footer";
+import { HowItWorks } from "@/components/how-it-works";
+import { PlanSection } from "@/components/plans-section";
 import { EE, O2, Three, Vodafone, WhiteLogo } from "@/components/svgs";
 import { Underline } from "@/components/underline-wrapper";
 import Image from "next/image";
+import React from "react";
 
-export default function Page() {
+export default function HomePageLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <div
         className=" w-full h-auto"
         style={{
           backgroundImage: "url('/hero-bg.webp')",
-          backgroundSize: "100% 100%",
+          backgroundSize: "105% 100%",
+          backgroundPosition: "center",
           clipPath: "url(#curve)",
         }}
       >
@@ -120,6 +131,11 @@ export default function Page() {
         </div>
       </div>
       <FeatureSection />
+      <PlanSection>{children}</PlanSection>
+      <HowItWorks />
+      <FAQs />
+      <Benefits />
+      <Footer />
     </>
   );
 }

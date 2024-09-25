@@ -3,7 +3,7 @@ import { EsimIcon, FiveGIcon, SecurityIcon, TravelIcon } from "./svgs";
 export function FeatureSection() {
   return (
     <div className=" pt-20">
-      <p className=" font-gilroyBold text-3xl text-center pb-2">
+      <p className=" font-gilroyBold text-4xl text-center pb-2">
         Level Up Your Journey.
       </p>
       <p className=" font-gilroyBold text-sm text-center">
