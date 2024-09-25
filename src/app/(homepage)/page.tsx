@@ -11,26 +11,6 @@ export default function Page() {
   );
 }
 function EE() {
-  // const [filteredPlans, setFilteredPlans] = useState<Plan[]>([]);
-  // const searchParams = useSearchParams();
-
-  // useEffect(() => {
-  //   const region = searchParams.get("region") as Region | null;
-  //   if (region && region.length) {
-  //     setFilteredPlans(plans.filter((p) => p.region === region));
-  //   } else {
-  //     setFilteredPlans(plans.filter((p) => p.region === "UK"));
-  //   }
-  // }, [searchParams]);
-
-  // if (!filteredPlans.length) {
-  //   return (
-  //     <div className=" w-full flex items-center justify-center">
-  //       <p>No plans to show currently</p>
-  //     </div>
-  //   );
-  // }
-
   const { EE: plans } = PLANS;
   return (
     <>
@@ -40,3 +20,22 @@ function EE() {
     </>
   );
 }
+// const [filteredPlans, setFilteredPlans] = useState<Plan[]>([]);
+// const searchParams = useSearchParams();
+
+// useEffect(() => {
+//   const region = searchParams.get("region") as Region | null;
+//   if (region && region.length) {
+//     setFilteredPlans(plans.filter((p) => p.region === region));
+//   } else {
+//     setFilteredPlans(plans.filter((p) => p.region === "UK"));
+//   }
+// }, [searchParams]);
+
+// if (!filteredPlans.length) {
+//   return (
+//     <div className=" w-full flex items-center justify-center">
+//       <p>No plans to show currently</p>
+//     </div>
+//   );
+// }
