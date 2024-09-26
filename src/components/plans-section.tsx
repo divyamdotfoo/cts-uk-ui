@@ -11,7 +11,7 @@ export function PlanSection({ children }: { children: React.ReactNode }) {
         <ToggleRegion />
       </div>
       <Providers />
-      <div className="max-w-4xl w-full px-4 mx-auto flex items-stretch justify-center gap-4 pt-12">
+      <div className="xl:max-w-4xl w-full overflow-auto px-8 md:px-4 mx-auto flex items-stretch md:justify-center justify-start gap-4 pt-12">
         {children}
       </div>
     </div>
@@ -30,7 +30,7 @@ export function Providers() {
         className=" relative flex items-center justify-center w-fit mx-auto"
       >
         <motion.div
-          className="absolute transition-all w-24 h-[2px] bg-indigo-800 -bottom-1"
+          className="absolute transition-all sm:w-24 w-20 h-[2px] bg-indigo-800 -bottom-1"
           style={{
             left: pathname.startsWith("three")
               ? "0%"
@@ -63,7 +63,7 @@ function MenuItem({
   return (
     <button
       className={cn(
-        "font-gilroyMedium  w-24  transition-all text-sm",
+        "font-gilroyMedium sm:w-24 w-20  transition-all md:text-sm text-base",
         pathname.split("?")[0] === path
           ? " text-black font-gilroyBold"
           : "text-gray-500 hover:text-black"

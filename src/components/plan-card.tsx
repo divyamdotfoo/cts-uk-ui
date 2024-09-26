@@ -34,7 +34,7 @@ export const PlanCard = ({
   // }));
 
   return (
-    <div className=" bg-white border-gray-200 border-[1.5px] rounded-sm shadow-sm flex flex-col items-center basis-1/3">
+    <div className=" bg-white border-gray-200 border-[1.5px] rounded-sm shadow-sm flex flex-col items-center min-w-64">
       <div className=" py-1">{renderPlanProviderIcon(plan.provider)}</div>
       <div className="bg-planCardBg flex flex-col items-center py-4 w-full text-white ">
         <div className="flex items-center gap-2 pb-4">

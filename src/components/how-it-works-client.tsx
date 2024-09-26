@@ -11,7 +11,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export function HowItWoksGifs() {
   const [active, setActive] = useState(0);
   return (
-    <div className="basis-2/5 shrink-0 z-0 flex flex-col items-center gap-2">
+    <div className="md:basis-2/5 shrink-0 z-0 flex flex-col items-center gap-2">
       <div className=" relative w-full h-full">
         <Image
           src={"/blue-circles.webp"}

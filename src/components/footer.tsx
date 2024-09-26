@@ -3,14 +3,21 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <div className=" bg-white pt-10">
-      <div className=" max-w-5xl grid grid-cols-4 mx-auto ">
+    <div className=" bg-white md:px-6 pl-6 pr-10 md:pt-10 pt-8  border-t border-gray-300">
+      <Image
+        src="/logo.png"
+        width={200}
+        height={200}
+        alt="logo"
+        className="w-28 md:hidden pb-12"
+      />
+      <div className=" max-w-5xl grid md:grid-cols-4 grid-cols-3 mx-auto ">
         <Image
           src="/logo.png"
           width={200}
           height={200}
           alt="logo"
-          className="w-28"
+          className="w-28 hidden md:block"
         />
         <div className=" flex flex-col items-start gap-4">
           <p className=" font-semibold text-sm">Links</p>

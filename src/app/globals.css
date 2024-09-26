@@ -58,4 +58,14 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+
+  .bgClip {
+    clip-path: url("#bgClipSmall");
+  }
+
+  @media (min-width: 768px) {
+    .bgClip {
+      clip-path: url("#bgClipLarge");
+    }
+  }
 }

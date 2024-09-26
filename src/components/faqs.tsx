@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 export function FAQs() {
   const faqs = useMemo(
     () => [
@@ -89,14 +89,31 @@ export function FAQs() {
     ],
     []
   );
+  const [showAll, setShowAll] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window) {
+        const innerWidth = window.innerWidth;
+        if (innerWidth < 768) {
+          setShowAll(false);
+        } else {
+          setShowAll(true);
+        }
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <motion.div className="text-black py-20 ">
+    <motion.div className="text-black py-20 flex flex-col items-center">
       <p className=" text-center pb-14 font-gilroyBold text-bluePrimary text-4xl">
         Frequently asked questions
       </p>
-      <div className="max-w-5xl flex items-start justify-center gap-4 mx-auto">
+      <div className="max-w-5xl pb-6 flex flex-col md:flex-row px-6 xl:px-0 items-start justify-center gap-4 mx-auto">
         <div className=" flex flex-col basis-1/2 shrink-0 items-start gap-3">
-          {faqs.slice(0, 9).map((f) => (
+          {faqs.slice(0, showAll ? 9 : 7).map((f) => (
             <FAQ
               key={f.question.slice(0, 10)}
               answer={f.answer}
@@ -104,16 +121,27 @@ export function FAQs() {
             />
           ))}
         </div>
-        <div className="flex flex-col basis-1/2 shrink-0 items-start gap-3">
-          {faqs.slice(9).map((f) => (
-            <FAQ
-              key={f.question.slice(0, 10)}
-              answer={f.answer}
-              question={f.question}
-            />
-          ))}
-        </div>
+        {showAll && (
+          <div className="flex flex-col basis-1/2 shrink-0 items-start gap-3">
+            {faqs.slice(9).map((f) => (
+              <FAQ
+                key={f.question.slice(0, 10)}
+                answer={f.answer}
+                question={f.question}
+              />
+            ))}
+          </div>
+        )}
       </div>
+      <motion.button
+        whileTap={{ scale: 0.97 }}
+        className="md:hidden bg-bluePrimary shadow-md  shadow-black/10 text-white font-gilroyMedium px-12 py-2 rounded-md"
+        onClick={() => {
+          setShowAll((p) => !p);
+        }}
+      >
+        {showAll ? "Show less" : "Show more"}
+      </motion.button>
     </motion.div>
   );
 }
@@ -124,13 +152,13 @@ function FAQ({ question, answer }: { question: string; answer: string }) {
   return (
     <div
       className={cn(
-        "bg-[#f6f6f7] w-full p-4 text-gray-800 font-gilroyBold text-xl  rounded-lg shadow-sm border-[1.8px] hover:border-gray-200  transition-all",
+        " bg-accentSection w-full p-4 text-gray-800 font-gilroyBold text-xl  rounded-lg shadow-sm border-[1.8px] hover:border-gray-200  transition-all",
         show ? "border-gray-200" : "border-transparent"
       )}
     >
       <button
         onClick={() => setShow((prev) => !prev)}
-        className="w-full bg-transparent flex items-start justify-between"
+        className="w-full bg-transparent flex items-start justify-between gap-3"
       >
         <span className=" text-wrap text-start">{question}</span>
         <span>
