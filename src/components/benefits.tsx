@@ -119,6 +119,7 @@ export function Benefits() {
             <p className=" flex items-center gap-2">
               {[1, 1, 1, 1].map((_, i) => (
                 <span
+                  key={i}
                   className={cn(
                     "w-3 h-3 rounded-full",
                     i + 1 === current ? "bg-bluePrimary" : "bg-gray-300 "

@@ -16,8 +16,9 @@ const config: Config = {
         planCardBg: "var(--plan-card-price-bg)",
         planCardBtn: "var(--plan-card-btn)",
         planCardData: "var(--plan-card-data)",
-        accentSection: "var(--accent-section)",
+        accentWhite: "var(--accent-white)",
         bluePrimary: "var(--blue-primary)",
+        blueSecondary: "var(--blue-secondary)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

@@ -54,7 +54,6 @@ export const useCart = create<UseCart>((set) => ({
         newPlan,
         ...prev.plans.slice(idx + 1),
       ];
-      console.log(allPlans);
       const subTotal = allPlans.reduce(
         (prev, curr) => prev + curr.rate * curr.quantity,
         0

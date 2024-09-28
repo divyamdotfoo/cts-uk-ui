@@ -103,8 +103,6 @@ export default function HomePageLayout({
         </div>
       </div>
       <NewsLetter />
-
-      <Footer />
     </div>
   );
 }

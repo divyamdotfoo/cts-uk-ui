@@ -3,6 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Inter } from "next/font/google";
+import { Footer } from "@/components/footer";
+import { SessionProvider } from "@/lib/hooks";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,10 +45,14 @@ export default function RootLayout({
       className={`${inter.variable} ${gilroy.variable} ${gilroyBold.variable} ${gilroyLight.variable} ${gilroyMedium.variable}`}
     >
       <body className=" bg-white text-black">
-        <div className="font-gilroy">
-          <Navbar />
-          {children}
-        </div>
+        <SessionProvider>
+          <div className="font-gilroy">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
+          <Toaster richColors position="top-center" duration={2500} />
+        </SessionProvider>
       </body>
     </html>
   );

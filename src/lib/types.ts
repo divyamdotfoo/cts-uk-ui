@@ -1,14 +1,14 @@
 export type Providers = "THREE" | "EE" | "O2" | "VODAFONE";
 const Validity = [1, 3, 6, 12] as const;
 export type Region = "UK" | "UK_EU";
+export type ValidityString = "30-days" | "3-months" | "6-months" | "12-months";
 export type TValidity = (typeof Validity)[number];
 
 export type PlanVariants = {
   [key in TValidity]: {
     id: TValidity;
-    validityString: "30-days" | "3-months" | "6-months" | "12-months";
+    validityString: ValidityString;
     rate: number;
-    strikeOffRate: number | null;
   };
 };
 
@@ -25,8 +25,7 @@ export interface Plan {
 export interface CartItem extends Omit<Plan, "variants"> {
   quantity: number;
   rate: number;
-  strikeOffRate: number;
-  validity: number;
+  validity: TValidity;
 }
 export interface Cart {
   plans: CartItem[];

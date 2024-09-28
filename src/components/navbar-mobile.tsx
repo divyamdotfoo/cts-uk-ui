@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useCart } from "@/lib/store";
 
 export function NavbarMobile() {
   const [open, setOpen] = useState(false);
@@ -67,9 +68,7 @@ export function NavbarMobile() {
           className=" h-14 w-auto"
         />
       </Link>
-      <button>
-        <ShoppingCart className=" w-9 h-9 text-black hover:text-bluePrimary focus:text-bluePrimary" />
-      </button>
+      <ShowCartBtn />
     </div>
   );
 }
@@ -99,6 +98,26 @@ function HamLink({
       )}
     >
       {children}
+    </button>
+  );
+}
+
+export function ShowCartBtn() {
+  const plans = useCart((s) => s.plans);
+  const router = useRouter();
+  return (
+    <button
+      onClick={() => {
+        router.push("/cart");
+      }}
+      className=" relative"
+    >
+      <ShoppingCart className=" w-9 h-9 md:w-5 md:h-5 text-black hover:text-bluePrimary focus:text-bluePrimary" />
+      {plans.length > 0 && (
+        <span className=" w-4 h-4 rounded-full text-[8px] flex items-center justify-center bg-bluePrimary text-white font-gilroyMedium absolute -right-2 -top-3">
+          {plans.length}
+        </span>
+      )}
     </button>
   );
 }

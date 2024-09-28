@@ -17,7 +17,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { ArrowDownUp, PhoneCall } from "lucide-react";
+import { ArrowDownUp, CheckCircle, PhoneCall } from "lucide-react";
+import { useCart } from "@/lib/store";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 export const PlanCard = ({
   children,
   plan,
@@ -28,10 +31,11 @@ export const PlanCard = ({
   defaultActive?: TValidity;
 }) => {
   const [activeVariant, setActiveVariant] = useState<TValidity>(defaultActive);
-
-  // const { plans } = useCart((s) => ({
-  //   plans: s.plans,
-  // }));
+  const router = useRouter();
+  const plans = useCart((s) => s.plans);
+  const addPlan = useCart((s) => s.addPlans);
+  const isPlanInCart =
+    plans.length > 0 && plans.findIndex((p) => p.id === plan.id) !== -1;
 
   return (
     <div className=" bg-white border-gray-200 border-[1.5px] rounded-sm shadow-sm flex flex-col items-center min-w-64">
@@ -57,7 +61,7 @@ export const PlanCard = ({
           </SelectTrigger>
           <SelectContent className=" border-gray-300 border-[1.5px] bg-gray-50">
             {Object.keys(plan.variants).map((k) => (
-              <SelectItem value={k}>
+              <SelectItem value={k} key={k}>
                 {Number(k) === 1 ? "30 days" : `${k} months`}
               </SelectItem>
             ))}
@@ -93,15 +97,60 @@ export const PlanCard = ({
           </PlanFeatureItem>
         </div>
 
-        <button className=" shadow-md text-white bg-planCardBtn w-full flex items-center justify-center py-2 rounded-md text-sm">
-          Add to cart
-          {/* {plans.findIndex((p) => p.id === plan.id) === -1 ? (
+        <button
+          className=" shadow-md text-white bg-planCardBtn hover:bg-blueSecondary transition-all w-full flex items-center justify-center py-2 rounded-md text-sm"
+          onClick={() => {
+            if (!isPlanInCart) {
+              addPlan({
+                data: plan.data,
+                id: plan.id,
+                provider: plan.provider,
+                quantity: 1,
+                region: plan.region,
+                type: plan.type,
+                rate: plan.variants[activeVariant].rate,
+                validity: activeVariant,
+              });
+
+              // toast.success("Added to cart", {
+              //   action: {
+              //     label: "View",
+              //     onClick: () => router.push("/cart"),
+              //     actionButtonStyle: {
+              //       backgroundColor: "#012169 !important",
+              //       color: "white !important",
+              //     },
+              //   },
+              // });
+              toast(
+                <div
+                  className="w-full text-green-800 text-lg flex items-center justify-between"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push("/cart");
+                  }}
+                >
+                  <div className=" flex items-center gap-2">
+                    <div className=" bg-white rounded-full border-gray-500">
+                      {renderPlanProviderIcon(plan.provider)}
+                    </div>
+                    <p>Plan has been added.</p>
+                  </div>
+                  <button className=" bg-bluePrimary text-sm text-white px-4 py-1 rounded-lg">
+                    view
+                  </button>
+                </div>
+              );
+            }
+          }}
+        >
+          {!isPlanInCart ? (
             "Add to cart"
           ) : (
             <span className=" flex items-center gap-2">
               Added <CheckCircle className=" text-inherit w-3 h-3" />
             </span>
-          )} */}
+          )}
         </button>
       </div>
     </div>
@@ -116,7 +165,7 @@ export const PlanFeatureItem = ({
   return <div className=" flex items-center gap-4">{children}</div>;
 };
 
-const renderPlanProviderIcon = (provider: Providers) => {
+export const renderPlanProviderIcon = (provider: Providers) => {
   switch (provider) {
     case "EE":
       return (

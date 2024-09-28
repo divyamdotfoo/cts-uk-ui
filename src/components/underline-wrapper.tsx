@@ -2,14 +2,21 @@
 import React, { useEffect, useRef } from "react";
 import { useInView } from "framer-motion";
 import { annotate } from "rough-notation";
+import { RoughAnnotationType } from "rough-notation/lib/model";
 export function Underline({
   children,
   color,
+  type,
+  iterations,
+  strokeWidth,
   delay = 0,
   className,
 }: {
   children: React.ReactNode;
   color: string;
+  strokeWidth?: number;
+  iterations?: number;
+  type?: RoughAnnotationType;
   delay?: number;
   className?: string;
 }) {
@@ -21,9 +28,10 @@ export function Underline({
   useEffect(() => {
     if (isInView && elRef.current) {
       const ann = annotate(elRef.current, {
-        type: "underline",
-        strokeWidth: 5,
+        type: type ?? "underline",
+        strokeWidth: strokeWidth ?? 5,
         color: color,
+        iterations: iterations ?? 2,
       });
       setTimeout(() => {
         ann.show();
