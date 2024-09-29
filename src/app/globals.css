@@ -49,6 +49,8 @@ body {
     --accent-white: #fafbfc;
     --blue-primary: #012169;
     --blue-secondary: #0d469d;
+    --blue-accent: #f3f8ff;
+    --blue-accent-foreground: #4d7cb5;
   }
 }
 

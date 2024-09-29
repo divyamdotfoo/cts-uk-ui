@@ -1,5 +1,11 @@
 "use client";
-import { ChevronDown, MenuIcon, ShoppingCart, X } from "lucide-react";
+import {
+  ArrowRightFromLine,
+  ChevronDown,
+  MenuIcon,
+  ShoppingCart,
+  X,
+} from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
@@ -8,6 +14,8 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useCart } from "@/lib/store";
+import { useUser } from "@/lib/hooks";
+import { LoginDialog } from "./login-dialog";
 
 export function NavbarMobile() {
   const [open, setOpen] = useState(false);
@@ -112,7 +120,7 @@ export function ShowCartBtn() {
       }}
       className=" relative"
     >
-      <ShoppingCart className=" w-9 h-9 md:w-5 md:h-5 text-black hover:text-bluePrimary focus:text-bluePrimary" />
+      <ShoppingCart className=" w-9 h-9 md:w-6 md:h-6 text-black stroke-[1.4px] hover:text-bluePrimary focus:text-bluePrimary" />
       {plans.length > 0 && (
         <span className=" w-4 h-4 rounded-full text-[8px] flex items-center justify-center bg-bluePrimary text-white font-gilroyMedium absolute -right-2 -top-3">
           {plans.length}
@@ -120,4 +128,16 @@ export function ShowCartBtn() {
       )}
     </button>
   );
+}
+
+export function ShowUserProfile() {
+  const { user } = useUser();
+  if (!user)
+    return (
+      <LoginDialog>
+        <button className=" font-gilroyMedium flex items-center gap-2 p-2 rounded-xl border border-gray-300 hover:border-gray-400 text-sm">
+          Log in <ArrowRightFromLine className=" w-4 h-4 stroke-[1.4px]" />
+        </button>
+      </LoginDialog>
+    );
 }

@@ -20,7 +20,7 @@ export function PlanSection({ children }: { children: React.ReactNode }) {
 
 export function Providers() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname().slice(1);
+  const pathname = usePathname().split("plans")[1].slice(1);
   return (
     <div className=" w-full relative pt-12">
       <div className=" absolute w-full h-[2px] bg-gray-200 -bottom-1 inset-x-0"></div>
@@ -34,17 +34,17 @@ export function Providers() {
           style={{
             left: pathname.startsWith("three")
               ? "0%"
-              : pathname === ""
+              : pathname === "ee"
               ? "25%"
               : pathname.startsWith("o2")
               ? "50%"
               : "75%",
           }}
         ></motion.div>
-        <MenuItem path="/three">Three</MenuItem>
-        <MenuItem path="/">EE</MenuItem>
-        <MenuItem path="/o2">O2</MenuItem>
-        <MenuItem path="/vodafone">Vodafone</MenuItem>
+        <MenuItem path="/plans/three">Three</MenuItem>
+        <MenuItem path="/plans/ee">EE</MenuItem>
+        <MenuItem path="/plans/o2">O2</MenuItem>
+        <MenuItem path="/plans/vodafone">Vodafone</MenuItem>
       </div>
     </div>
   );
@@ -80,11 +80,18 @@ function MenuItem({
 }
 
 export function ToggleRegion() {
+  const pathname = usePathname();
+  const params = useSearchParams();
   const [active, setActive] = useState<Region>("UK");
   const containerRef = useRef<HTMLDivElement>(null);
   const activeTabRef = useRef<HTMLButtonElement>(null);
-  const pathname = usePathname();
   const router = useRouter();
+  useEffect(() => {
+    const region = params.get("region");
+    if (region && (region === "UK" || region === "UK_EU")) {
+      setActive(region);
+    }
+  }, [params, pathname]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -130,11 +137,12 @@ export function ToggleRegion() {
         </li>
       </ul>
       <div
-        className="absolute z-20 w-full overflow-hidden transition-all duration-250 ease-in-out"
+        className="absolute z-20 w-full overflow-hidden bg-bluePrimary transition-all duration-250 ease-in-out"
         aria-hidden
         ref={containerRef}
+        style={{ clipPath: "inset(0px 63% 0px 0% round 4px)" }}
       >
-        <ul className="relative flex w-full justify-center gap-4 bg-[#001775] rounded-md text-white border border-black/40">
+        <ul className="relative flex w-full justify-center gap-4 rounded-md text-white border border-black/40">
           <li>
             <button
               tabIndex={-1}

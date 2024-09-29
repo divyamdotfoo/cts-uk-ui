@@ -1,20 +1,14 @@
 import { Benefits } from "@/components/benefits";
 import { NewsLetter } from "@/components/email";
-import { Footer } from "@/components/footer";
 import { FAQs } from "@/components/faqs";
 import { FeatureSection } from "@/components/feature-section";
 import { HowItWorks } from "@/components/how-it-works";
-import { PlanSection } from "@/components/plans-section";
 import { EE, O2, Three, Vodafone, WhiteLogo } from "@/components/svgs";
 import { Underline } from "@/components/underline-wrapper";
 import Image from "next/image";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 
-export default function HomePageLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function HomePage() {
   return (
     <div className="">
       <div
@@ -43,6 +37,7 @@ export default function HomePageLayout({
             </clipPath>
           </defs>
         </svg>
+
         <div
           className=" pt-10 sm:pb-28 pb-16 max-w-[1440px] w-full mx-auto md:px-12 px-4 sm:px-6 2xl:px-0 md:flex md:items-center md:gap-4"
           style={{}}
@@ -79,7 +74,7 @@ export default function HomePageLayout({
 
       <FeatureSection />
       <Suspense fallback={null}>
-        <PlanSection>{children}</PlanSection>
+        {/* <PlanSection>{children}</PlanSection> */}
       </Suspense>
       <HowItWorks />
       <FAQs />

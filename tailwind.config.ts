@@ -19,6 +19,8 @@ const config: Config = {
         accentWhite: "var(--accent-white)",
         bluePrimary: "var(--blue-primary)",
         blueSecondary: "var(--blue-secondary)",
+        blueAccent: "var(--blue-accent)",
+        blueAccentForeground: "var(--blue-accent-foreground)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

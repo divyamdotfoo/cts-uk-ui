@@ -152,7 +152,7 @@ function FAQ({ question, answer }: { question: string; answer: string }) {
   return (
     <div
       className={cn(
-        " bg-accentSection w-full p-4 text-gray-800 font-gilroyBold text-xl  rounded-lg shadow-sm border-[1.8px] hover:border-gray-200  transition-all",
+        " bg-gray-100 w-full p-4 text-gray-800 font-gilroyBold text-xl  rounded-lg shadow-sm border-[1.8px] hover:border-gray-200  transition-all",
         show ? "border-gray-200" : "border-transparent"
       )}
     >
