@@ -92,7 +92,7 @@ export default function Page() {
           </div>
           <div className=" grid md:grid-cols-4 grid-cols-2  gap-2 max-w-4xl mx-auto flex-wrap">
             {blogThumbnails.map((b) => (
-              <div className=" flex flex-col items-center gap-2">
+              <div className=" flex flex-col items-center gap-2" key={b.link}>
                 <div className=" w-8 h-8 rounded-full p-2 flex items-center justify-center bg-bluePrimary text-white">
                   {<b.Icon className=" text-inherit" />}
                 </div>

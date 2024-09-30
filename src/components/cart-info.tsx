@@ -223,8 +223,7 @@ function OrderSummary({
 }: {
   validateOrderInfo: () => void;
 }) {
-  const { plans, subTotal, total, vat, addPlans, deletePlan, toggleQuantity } =
-    useCart();
+  const { plans, addPlans, deletePlan, toggleQuantity } = useCart();
 
   return (
     <div className=" w-full flex flex-col items-start">
@@ -283,7 +282,13 @@ function OrderSummary({
         </div>
       </div>
       <p className=" w-full text-4xl flex items-center justify-between px-6 py-10 font-gilroyMedium">
-        <span>Total due</span> <span>£{total.toFixed(2)}</span>
+        <span>Total due</span>{" "}
+        <span>
+          £
+          {plans
+            .reduce((acc, curr) => acc + curr.rate * curr.quantity, 0)
+            .toFixed(2)}
+        </span>
       </p>
       <button
         onClick={validateOrderInfo}

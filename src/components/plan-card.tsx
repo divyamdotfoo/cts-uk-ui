@@ -1,6 +1,6 @@
 "use client";
-import { Plan, Providers, TValidity } from "@/lib/types";
-import { useState } from "react";
+import { Plan, Providers, Region, TValidity } from "@/lib/types";
+import { useEffect, useState } from "react";
 import {
   EE,
   FiveGSim,
@@ -20,7 +20,7 @@ import {
 import { ArrowDownUp, CheckCircle, PhoneCall } from "lucide-react";
 import { useCart } from "@/lib/store";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 export const PlanCard = ({
   children,
   plan,
@@ -111,17 +111,6 @@ export const PlanCard = ({
                 rate: plan.variants[activeVariant].rate,
                 validity: activeVariant,
               });
-
-              // toast.success("Added to cart", {
-              //   action: {
-              //     label: "View",
-              //     onClick: () => router.push("/cart"),
-              //     actionButtonStyle: {
-              //       backgroundColor: "#012169 !important",
-              //       color: "white !important",
-              //     },
-              //   },
-              // });
               toast(
                 <div
                   className="w-full text-green-800 text-lg flex items-center justify-between"
@@ -193,3 +182,26 @@ export const renderPlanProviderIcon = (provider: Providers) => {
       );
   }
 };
+
+export function FilterPlans({ plans }: { plans: Plan[] }) {
+  const params = useSearchParams();
+  const [filteredPlans, setFilteredPlans] = useState(
+    plans.filter((p) => p.region === "UK")
+  );
+
+  useEffect(() => {
+    const region = params.get("region") as Region;
+    if (region && (region === "UK" || region === "UK_EU")) {
+      setFilteredPlans(plans.filter((p) => p.region === region));
+    }
+  }, [params, plans]);
+
+  console.log(filteredPlans);
+  return (
+    <>
+      {filteredPlans.map((p) => (
+        <PlanCard plan={p} key={p.id} />
+      ))}
+    </>
+  );
+}

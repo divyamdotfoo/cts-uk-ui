@@ -37,13 +37,13 @@ export function NavbarMobile() {
           className=" top-[70px] font-gilroyMedium border-none inset-x-0 w-full bottom-0 bg-white text-black py-12 px-4"
         >
           <div className=" flex flex-col items-start gap-6 text-xl w-full">
-            <HamLink closeMenu={closeMenu} href={"/hello"}>
+            <HamLink closeMenu={closeMenu} href={"/plans"}>
               Shop Plans
               <ChevronDown className=" w-4 h-4" />
             </HamLink>
             <Separator className=" bg-gray-200" />
-            <HamLink closeMenu={closeMenu} href={"/"}>
-              Networks
+            <HamLink closeMenu={closeMenu} href={"/blogs"}>
+              Blogs
               <ChevronDown className=" w-4 h-4" />
             </HamLink>
             <Separator className=" bg-gray-200" />
@@ -53,15 +53,15 @@ export function NavbarMobile() {
             <Separator className=" bg-gray-200" />
 
             <HamLink closeMenu={closeMenu} href={"/"}>
-              Features
+              Networks
             </HamLink>
             <Separator className=" bg-gray-200" />
             <HamLink closeMenu={closeMenu} href={"/"}>
-              Blogs
+              Coverage
             </HamLink>
             <Separator className=" bg-gray-200" />
-            <HamLink closeMenu={closeMenu} href={"/"}>
-              Why Us
+            <HamLink closeMenu={closeMenu} href={"/about-us"}>
+              About Us
             </HamLink>
             <Separator className=" bg-gray-200" />
           </div>

@@ -1,4 +1,3 @@
-import { Benefits } from "@/components/benefits";
 import { FAQs } from "@/components/faqs";
 import { HowItWorks } from "@/components/how-it-works";
 import { PlanSection } from "@/components/plans-section";

@@ -27,9 +27,3 @@ export interface CartItem extends Omit<Plan, "variants"> {
   rate: number;
   validity: TValidity;
 }
-export interface Cart {
-  plans: CartItem[];
-  subTotal: number;
-  vat: number;
-  total: number;
-}

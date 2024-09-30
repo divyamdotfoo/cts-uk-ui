@@ -3,12 +3,16 @@ import { NewsLetter } from "@/components/email";
 import { FAQs } from "@/components/faqs";
 import { FeatureSection } from "@/components/feature-section";
 import { HowItWorks } from "@/components/how-it-works";
+import { HomePagePlansSection } from "@/components/plans-section-homepage";
 import { EE, O2, Three, Vodafone, WhiteLogo } from "@/components/svgs";
 import { Underline } from "@/components/underline-wrapper";
+import { PLANS } from "@/DATA";
 import Image from "next/image";
+import Link from "next/link";
 import { Suspense } from "react";
 
 export default function HomePage() {
+  const allPlans = Array.from(Object.values(PLANS)).flat(2);
   return (
     <div className="">
       <div
@@ -74,6 +78,7 @@ export default function HomePage() {
 
       <FeatureSection />
       <Suspense fallback={null}>
+        <HomePagePlansSection allPlans={allPlans} />
         {/* <PlanSection>{children}</PlanSection> */}
       </Suspense>
       <HowItWorks />
@@ -134,9 +139,12 @@ function HeroPlans() {
           <p className=" font-giloryLight text-gray-500 pb-4 text-sm">
             per month
           </p>
-          <button className=" w-full text-center py-1 text-white bg-black font-gilroyBold rounded-lg">
+          <Link
+            href="/plans/three"
+            className=" w-full text-center py-1 text-white bg-black font-gilroyBold rounded-lg"
+          >
             View all
-          </button>
+          </Link>
         </div>
 
         {/* EE */}
@@ -150,9 +158,12 @@ function HeroPlans() {
           <p className=" font-giloryLight text-gray-500 pb-4 text-sm">
             per month
           </p>
-          <button className=" w-full text-center py-1 text-white bg-ee font-gilroyBold rounded-lg">
+          <Link
+            href="/plans/ee"
+            className=" w-full text-center py-1 text-white bg-ee font-gilroyBold rounded-lg"
+          >
             View all
-          </button>
+          </Link>
         </div>
 
         {/* o2 */}
@@ -168,9 +179,12 @@ function HeroPlans() {
           <p className=" font-giloryLight text-gray-500 pb-4 text-sm">
             per month
           </p>
-          <button className=" w-full text-center py-1 text-white bg-o2 font-gilroyBold rounded-lg">
+          <Link
+            href={"/plans/o2"}
+            className=" w-full text-center py-1 text-white bg-o2 font-gilroyBold rounded-lg"
+          >
             View all
-          </button>
+          </Link>
         </div>
 
         {/* Vodafone */}
@@ -186,9 +200,12 @@ function HeroPlans() {
           <p className=" font-giloryLight text-gray-500 pb-4 text-sm">
             per month
           </p>
-          <button className=" w-full text-center py-1 text-white bg-vodafone font-gilroyBold rounded-lg">
+          <Link
+            href={"/plans/vodafone"}
+            className=" w-full text-center py-1 text-white bg-vodafone font-gilroyBold rounded-lg"
+          >
             View all
-          </button>
+          </Link>
         </div>
       </div>
     </>
