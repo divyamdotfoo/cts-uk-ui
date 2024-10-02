@@ -62,6 +62,9 @@ body {
     @apply bg-background text-foreground;
   }
 
+  button {
+    @apply cursor-pointer;
+  }
   .bgClip {
     clip-path: url("#bgClipSmall");
   }

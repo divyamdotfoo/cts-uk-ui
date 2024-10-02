@@ -27,3 +27,43 @@ export interface CartItem extends Omit<Plan, "variants"> {
   rate: number;
   validity: TValidity;
 }
+
+export type FetchParams =
+  | {
+      type: "login";
+      payload: {
+        email: string;
+        password: string;
+      };
+    }
+  | {
+      type: "register";
+      payload: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        password: string;
+        mobileNo?: string;
+      };
+    }
+  | {
+      type: "2FA";
+      payload: {
+        otp: string;
+      };
+    };
+
+export interface UserData {
+  token: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  userId: string;
+  phoneNumber?: string;
+  dateJoined?: string;
+}
+
+export class AccountAlreadyExistsError extends Error {}
+export class InternalServerError extends Error {}
+export class InvalidCredentials extends Error {}
+export class InvalidOTP extends Error {}

@@ -4,6 +4,7 @@ import {
   ChevronDown,
   MenuIcon,
   ShoppingCart,
+  UserCircle2Icon,
   X,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
@@ -16,6 +17,12 @@ import Link from "next/link";
 import { useCart } from "@/lib/store";
 import { useUser } from "@/lib/hooks";
 import { LoginDialog } from "./login-dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 export function NavbarMobile() {
   const [open, setOpen] = useState(false);
@@ -140,4 +147,19 @@ export function ShowUserProfile() {
         </button>
       </LoginDialog>
     );
+
+  return (
+    <TooltipProvider>
+      <Tooltip delayDuration={300}>
+        <TooltipTrigger>
+          <Link href="/profile">
+            <UserCircle2Icon className=" w-7 h-7 text-black hover:text-bluePrimary transition-all stroke-[1.2px]" />
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent className=" bg-white text-xs border-gray-300 font-gilroyMedium">
+          Your profile
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
 }

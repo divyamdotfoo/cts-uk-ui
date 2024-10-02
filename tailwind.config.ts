@@ -71,8 +71,18 @@ const config: Config = {
         gilroy: ["var(--font-gilroy)"],
         giloryLight: ["var(--font-gilroy-light)"],
         gilroyBold: ["var(--font-gilroy-bold)"],
+        gilroySemiBold: ["var(--font-gilroy-semibold)"],
         gilroyMedium: ["var(--font-gilroy-medium)"],
         inter: ["var(--font-inter)"],
+      },
+      keyframes: {
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
+      },
+      animation: {
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
     },
   },

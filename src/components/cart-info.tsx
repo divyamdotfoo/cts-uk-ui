@@ -1,19 +1,24 @@
 "use client";
-import { FormikErrors, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useCart } from "@/lib/store";
 import * as Yup from "yup";
 import { useUser } from "@/lib/hooks";
-import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Minus, Plus, UserCircle2 } from "lucide-react";
-import React from "react";
-import { cn } from "@/lib/utils";
+import { Loader2, Minus, Plus, UserCircle2 } from "lucide-react";
 import Link from "next/link";
 import { renderPlanProviderIcon } from "./plan-card";
 import { Separator } from "./ui/separator";
+import { CheckboxField, InputField } from "./formik-fields";
+import { fetcher } from "@/lib/fetcher";
+import { AccountAlreadyExistsError } from "@/lib/types";
+import { toast } from "sonner";
+import { useState } from "react";
+import { VerifyOtpDialog } from "./verify-otp-dialog";
 export function CartInfo() {
   const { plans } = useCart();
-  const { user, loading } = useUser();
+  const { user } = useUser();
+  const [isOtpDialogOpen, setOtpDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const newUserForm = useFormik({
     initialValues: {
@@ -54,23 +59,70 @@ export function CartInfo() {
     onSubmit: () => {},
   });
 
-  const validateOrderInfo = async () => {
-    const [z, k] = await Promise.all([
+  const validateForms = async () => {
+    const [errorsUserForm, errorsRegisterForm] = await Promise.all([
       newUserForm.validateForm(),
       agreementForm.validateForm(),
     ]);
-    if (Object.keys(z).length) {
-      document.getElementById(Object.keys(z)[0])?.focus();
-      return;
+
+    if (Object.keys(errorsUserForm).length) {
+      document.getElementById(Object.keys(errorsUserForm)[0])?.focus();
+      return false;
     }
-    if (Object.keys(k).length) {
-      document.getElementById(Object.keys(k)[0])?.focus();
+    if (Object.keys(errorsRegisterForm).length) {
+      document.getElementById(Object.keys(errorsRegisterForm)[0])?.focus();
+      return false;
     }
-    console.log(z, k);
+    return true;
   };
+
+  const proceedCheckout = async () => {
+    if (user) {
+      const isAgreed = await agreementForm.validateForm();
+      if (Object.keys(isAgreed).length) {
+        document.getElementById(Object.keys(isAgreed)[0])?.focus();
+        return;
+      }
+    }
+
+    // if user is new
+    const isFormValid = await validateForms();
+    if (!isFormValid) return;
+
+    // proceeding when form is valid to hit the create new user api
+    try {
+      setLoading(true);
+      const isSuccessfull = await fetcher({
+        type: "register",
+        payload: {
+          email: newUserForm.values.email,
+          firstName: newUserForm.values.firstName,
+          lastName: newUserForm.values.lastName,
+          password: newUserForm.values.password,
+          mobileNo: newUserForm.values.phoneNumber ?? "",
+        },
+      });
+      setLoading(false);
+      if (isSuccessfull !== true) return;
+      setOtpDialog(true);
+    } catch (e) {
+      setLoading(false);
+      if (e instanceof AccountAlreadyExistsError) {
+        toast.error("Email already exists.");
+        return;
+      }
+      toast.error("Something went wrong. Please try again later!");
+    }
+  };
+
   if (!plans.length) return <div>No plans to show</div>;
   return (
     <div className="grid md:grid-cols-2 grid-cols-1 gap-8 md:gap-0 max-w-6xl mx-auto pt-12 justify-items-center">
+      <VerifyOtpDialog
+        onOpenChange={setOtpDialog}
+        open={isOtpDialogOpen}
+        userData={newUserForm.values}
+      />
       <div className=" max-w-md">
         <p className=" text-2xl text-gray-900 font-gilroyMedium pb-4">
           Create your account
@@ -213,15 +265,17 @@ export function CartInfo() {
           </CheckboxField>
         </div>
       </div>
-      <OrderSummary validateOrderInfo={validateOrderInfo} />
+      <OrderSummary proceedCheckout={proceedCheckout} loading={loading} />
     </div>
   );
 }
 
 function OrderSummary({
-  validateOrderInfo,
+  proceedCheckout,
+  loading,
 }: {
-  validateOrderInfo: () => void;
+  proceedCheckout: () => void;
+  loading: boolean;
 }) {
   const { plans, addPlans, deletePlan, toggleQuantity } = useCart();
 
@@ -291,97 +345,16 @@ function OrderSummary({
         </span>
       </p>
       <button
-        onClick={validateOrderInfo}
-        className=" p-2 w-[90%] self-center bg-bluePrimary shadow-sm hover:bg-blueSecondary text-lg text-white rounded-lg font-gilroyMedium"
+        onClick={proceedCheckout}
+        className=" p-2 w-[90%] self-center bg-bluePrimary flex items-center justify-center gap-3 shadow-sm hover:bg-blueSecondary text-lg text-white rounded-lg font-gilroyMedium"
       >
         Proceed to checkout
+        {loading && (
+          <span>
+            <Loader2 className=" w-[18px] h-[18px] text-inherit animate-spin" />
+          </span>
+        )}
       </button>
-    </div>
-  );
-}
-
-function InputField({
-  errors,
-  ...inputProps
-}: React.InputHTMLAttributes<HTMLInputElement> & {
-  errors: FormikErrors<Record<string, string>>;
-}) {
-  const isError =
-    !!inputProps.id &&
-    !!errors[inputProps.id] &&
-    typeof errors[inputProps.id] === "string" &&
-    !!errors[inputProps.id]?.length;
-
-  return (
-    <div>
-      <Input
-        {...inputProps}
-        className={cn(
-          "",
-          isError
-            ? " ring-offset-red-400 ring-red-400 ring-offset-1 ring-1"
-            : "ring-offset-blue-800 focus-visible:ring-blue-800 focus-visible:ring-offset-1 focus-visible:ring-1"
-        )}
-      />
-      <p
-        className={cn(
-          "text-red-400 font-gilroyMedium text-sm",
-          isError ? "visible" : "invisible"
-        )}
-      >
-        {errors[inputProps.id!] ?? "error"}
-      </p>
-    </div>
-  );
-}
-
-interface CheckboxFieldProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  children: React.ReactNode;
-  errors?: FormikErrors<Record<string, string>>;
-}
-
-function CheckboxField({
-  children,
-  errors,
-  ...inputProps
-}: CheckboxFieldProps) {
-  const isError =
-    typeof errors === "object" &&
-    !!inputProps.id &&
-    !!errors[inputProps.id] &&
-    typeof errors[inputProps.id] === "string" &&
-    !!errors[inputProps.id]?.length;
-
-  return (
-    <div className=" flex md:items-center items-start  gap-2">
-      <label className="flex items-center cursor-pointer relative">
-        <input
-          type="checkbox"
-          className={cn(
-            "peer h-4 w-4 cursor-pointer transition-all translate-y-[2px] md:translate-y-0 appearance-none rounded shadow hover:shadow-md border  checked:bg-bluePrimary",
-            isError ? "border-red-700" : "border-bluePrimary"
-          )}
-          {...inputProps}
-        />
-        <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-3.5 w-3.5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            stroke="currentColor"
-            strokeWidth="1"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </span>
-      </label>
-      <p className=" font-gilroyMedium text-sm text-gray-800 ">{children}</p>
     </div>
   );
 }

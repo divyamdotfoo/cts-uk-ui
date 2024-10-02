@@ -12,21 +12,28 @@ const inter = Inter({
   weight: ["400", "500", "700"],
   variable: "--font-inter",
 });
-const gilroyLight = localFont({
-  src: "./fonts/Gilroy-Light.ttf",
-  variable: "--font-gilroy-light",
-});
+
 const gilroyBold = localFont({
   src: "./fonts/Gilroy-Bold.ttf",
   variable: "--font-gilroy-bold",
 });
+const gilroySemibold = localFont({
+  src: "./fonts/Gilroy-SemiBold.ttf",
+  variable: "--font-gilroy-semibold",
+});
+
 const gilroyMedium = localFont({
   src: "./fonts/Gilroy-Medium.ttf",
   variable: "--font-gilroy-medium",
 });
+
 const gilroy = localFont({
   src: "./fonts/Gilroy-Regular.ttf",
   variable: "--font-gilroy",
+});
+const gilroyLight = localFont({
+  src: "./fonts/Gilroy-Light.ttf",
+  variable: "--font-gilroy-light",
 });
 
 export const metadata: Metadata = {
@@ -42,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${gilroy.variable} ${gilroyBold.variable} ${gilroyLight.variable} ${gilroyMedium.variable}`}
+      className={`${inter.variable} ${gilroy.variable} ${gilroyBold.variable} ${gilroyLight.variable} ${gilroyMedium.variable} ${gilroySemibold.variable}`}
     >
       <body className=" bg-white text-black">
         <SessionProvider>
@@ -51,7 +58,7 @@ export default function RootLayout({
             {children}
             <Footer />
           </div>
-          <Toaster richColors position="top-center" duration={2500} />
+          <Toaster richColors position="top-center" duration={2000} />
         </SessionProvider>
       </body>
     </html>

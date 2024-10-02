@@ -17,9 +17,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { ArrowDownUp, CheckCircle, PhoneCall } from "lucide-react";
+import { ArrowDownUp, PhoneCall } from "lucide-react";
 import { useCart } from "@/lib/store";
-import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 export const PlanCard = ({
   children,
@@ -99,47 +98,42 @@ export const PlanCard = ({
 
         <button
           className=" shadow-md text-white bg-planCardBtn hover:bg-blueSecondary transition-all w-full flex items-center justify-center py-2 rounded-md text-sm"
-          onClick={() => {
-            if (!isPlanInCart) {
-              addPlan({
-                data: plan.data,
-                id: plan.id,
-                provider: plan.provider,
-                quantity: 1,
-                region: plan.region,
-                type: plan.type,
-                rate: plan.variants[activeVariant].rate,
-                validity: activeVariant,
-              });
-              toast(
-                <div
-                  className="w-full text-green-800 text-lg flex items-center justify-between"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    router.push("/cart");
-                  }}
-                >
-                  <div className=" flex items-center gap-2">
-                    <div className=" bg-white rounded-full border-gray-500">
-                      {renderPlanProviderIcon(plan.provider)}
-                    </div>
-                    <p>Plan has been added.</p>
-                  </div>
-                  <button className=" bg-bluePrimary text-sm text-white px-4 py-1 rounded-lg">
-                    view
-                  </button>
-                </div>
-              );
-            }
-          }}
+          // onClick={() => {
+          //   if (!isPlanInCart) {
+          //     addPlan({
+          //       data: plan.data,
+          //       id: plan.id,
+          //       provider: plan.provider,
+          //       quantity: 1,
+          //       region: plan.region,
+          //       type: plan.type,
+          //       rate: plan.variants[activeVariant].rate,
+          //       validity: activeVariant,
+          //     });
+          //     toast(
+          //       <div
+          //         className="w-full text-green-800 text-lg flex items-center justify-between"
+          //         onClick={(e) => {
+          //           e.preventDefault();
+          //           router.push("/cart");
+          //         }}
+          //       >
+          //         <div className=" flex items-center gap-2">
+          //           <div className=" bg-white rounded-full border-gray-500">
+          //             {renderPlanProviderIcon(plan.provider)}
+          //           </div>
+          //           <p>Plan has been added.</p>
+          //         </div>
+          //         <button className=" bg-bluePrimary text-sm text-white px-4 py-1 rounded-lg">
+          //           view
+          //         </button>
+          //       </div>
+          //     );
+          //   }
+          // }}
+          onClick={() => router.push(`/plans/${plan.provider.toLowerCase()}`)}
         >
-          {!isPlanInCart ? (
-            "Add to cart"
-          ) : (
-            <span className=" flex items-center gap-2">
-              Added <CheckCircle className=" text-inherit w-3 h-3" />
-            </span>
-          )}
+          Buy now
         </button>
       </div>
     </div>
