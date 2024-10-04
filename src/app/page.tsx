@@ -1,11 +1,12 @@
 import { Benefits } from "@/components/benefits";
+import { Customers } from "@/components/customers";
 import { NewsLetter } from "@/components/email";
 import { FAQs } from "@/components/faqs";
 import { FeatureSection } from "@/components/feature-section";
 import { HowItWorks } from "@/components/how-it-works";
 import { HomePagePlansSection } from "@/components/plans-section-homepage";
 import { EE, O2, Three, Vodafone, WhiteLogo } from "@/components/svgs";
-import { Underline } from "@/components/underline-wrapper";
+import { Underline } from "@/components/ui/underline";
 import { PLANS } from "@/DATA";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +16,14 @@ export default function HomePage() {
   const allPlans = Array.from(Object.values(PLANS)).flat(2);
   return (
     <div className="">
+      <Image
+        src={"/hero-bg.webp"}
+        width={1400}
+        height={1400}
+        alt=""
+        className="hidden"
+        priority
+      />
       <div
         className=" w-full relative h-auto bg-center bg-[length:150%_100%] md:bg-[length:105%_100%] bgClip"
         style={{
@@ -52,7 +61,11 @@ export default function HomePage() {
                 <h1 className=" font-gilroyBold w-fit md:leading-[57px] leading-tight lg:text-5xl sm:text-4xl text-3xl text-white">
                   <span className=" block">Ditch the Old SIM Cards.</span>
                   <span className=" block">Meet the Ultimate</span>
-                  <Underline color="yellow" className=" relative">
+                  <Underline
+                    color="yellow"
+                    className=" relative"
+                    strokeWidth={1.5}
+                  >
                     eSIM Experience.
                     <WhiteLogo className=" absolute -right-24 md:top-0 -top-5" />
                   </Underline>
@@ -79,8 +92,8 @@ export default function HomePage() {
       <FeatureSection />
       <Suspense fallback={null}>
         <HomePagePlansSection allPlans={allPlans} />
-        {/* <PlanSection>{children}</PlanSection> */}
       </Suspense>
+      <Customers />
       <HowItWorks />
       <FAQs />
       <Benefits />
@@ -110,9 +123,9 @@ export default function HomePage() {
 function HeroLogos() {
   return (
     <div className="flex items-center translate-y-6">
-      <Image src={"/eu.png"} width={650} height={650} alt="logo" />
+      <Image src={"/eu.webp"} width={650} height={650} alt="logo" />
       <Image
-        src={"/uk.png"}
+        src={"/uk.webp"}
         width={650}
         height={650}
         alt="logo"

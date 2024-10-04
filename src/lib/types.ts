@@ -51,6 +51,20 @@ export type FetchParams =
       payload: {
         otp: string;
       };
+    }
+  | {
+      type: "reset-password-initiate";
+      payload: {
+        email: string;
+      };
+    }
+  | {
+      type: "change-password";
+      payload: {
+        email: string;
+        password: string;
+        otp: string;
+      };
     };
 
 export interface UserData {

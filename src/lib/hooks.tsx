@@ -67,6 +67,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem(LocalStorageKeyUser);
       }
     }
+    setUser(undefined);
     router.refresh();
     router.replace("/");
   };

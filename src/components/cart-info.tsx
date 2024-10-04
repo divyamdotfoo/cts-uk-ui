@@ -14,6 +14,7 @@ import { AccountAlreadyExistsError } from "@/lib/types";
 import { toast } from "sonner";
 import { useState } from "react";
 import { VerifyOtpDialog } from "./verify-otp-dialog";
+import { LoginDialog } from "./login-dialog";
 export function CartInfo() {
   const { plans } = useCart();
   const { user } = useUser();
@@ -115,7 +116,18 @@ export function CartInfo() {
     }
   };
 
-  if (!plans.length) return <div>No plans to show</div>;
+  if (!plans.length)
+    return (
+      <div className="h-80 w-full flex flex-col items-center gap-4 justify-center">
+        <p className=" text-2xl font-gilroySemiBold">Your cart is empty.</p>
+        <Link
+          href={"/plans"}
+          className=" bg-bluePrimary py-2 px-5 rounded-xl shadow-sm hover:bg-blueSecondary text-white"
+        >
+          Shop now
+        </Link>
+      </div>
+    );
   return (
     <div className="grid md:grid-cols-2 grid-cols-1 gap-8 md:gap-0 max-w-6xl mx-auto pt-12 justify-items-center">
       <VerifyOtpDialog
@@ -141,9 +153,11 @@ export function CartInfo() {
           <>
             <div className=" flex items-center mb-10 justify-between shadow-md shadow-blue-100 bg-[#fafbfc] border border-gray-200 p-3 rounded-lg">
               <p className=" font-gilroyMedium">Already have an account?</p>
-              <button className=" px-3 py-1 font-gilroyMedium text-white bg-bluePrimary hover:bg-blueSecondary rounded-lg transition-all">
-                Sign in
-              </button>
+              <LoginDialog>
+                <button className=" px-3 py-1 font-gilroyMedium text-white bg-bluePrimary hover:bg-blueSecondary rounded-lg transition-all">
+                  Sign in
+                </button>
+              </LoginDialog>
             </div>
             <div className=" flex flex-col items-stretch gap-6 w-full">
               <div className=" w-full flex items-center gap-6">
@@ -196,7 +210,7 @@ export function CartInfo() {
                 <Label htmlFor="password">Password</Label>
                 <InputField
                   errors={newUserForm.errors}
-                  type="password"
+                  type="text"
                   id="password"
                   placeholder="*******"
                   name="password"

@@ -77,6 +77,35 @@ export const fetcher = async (params: FetchParams) => {
         throw new InvalidOTP();
       return data as Record<string, any>;
     }
+    case "reset-password-initiate": {
+      const res = await fetch(`${baseUrl}/Account/ForgetPassword`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Email: params.payload.email,
+        }),
+      });
+      if (!res.ok) throw new InternalServerError();
+      return true;
+    }
+    case "change-password": {
+      const res = await fetch(`${baseUrl}/Account/ChangePassword`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Email: params.payload.email,
+          NewPassword: params.payload.password,
+          OTP: params.payload.otp,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+    }
   }
+
   throw new Error("invalid fetch type");
 };

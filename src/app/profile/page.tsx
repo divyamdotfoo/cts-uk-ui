@@ -1,6 +1,6 @@
 "use client";
 
-import { Underline } from "@/components/underline-wrapper";
+import { Underline } from "@/components/ui/underline";
 import { useUser } from "@/lib/hooks";
 import { capitalize } from "@/lib/utils";
 import { Loader2 } from "lucide-react";

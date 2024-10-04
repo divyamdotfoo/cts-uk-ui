@@ -4,32 +4,36 @@ import { Plan, type Providers, Region } from "@/lib/types";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { PlanCard } from "./plan-card";
+import { AnimateUp } from "./ui/animate-up";
 
 export function HomePagePlansSection({ allPlans }: { allPlans: Plan[] }) {
   const [activeRegion, setActiveRegion] = useState<Region>("UK");
   const [activeProvider, setActiveProvider] = useState<Providers>("EE");
 
   return (
-    <div className="pt-12">
-      <div className=" flex items-center justify-center">
-        <ToggleRegion active={activeRegion} setActive={setActiveRegion} />
+    <AnimateUp delay={0.2}>
+      <div className="pt-12">
+        <div className=" flex items-center justify-center">
+          <ToggleRegion active={activeRegion} setActive={setActiveRegion} />
+        </div>
+        <Providers
+          activeProvider={activeProvider}
+          setActiveProvider={setActiveProvider}
+        />
+        <div className="xl:max-w-4xl w-full overflow-auto px-8 md:px-4 mx-auto flex items-stretch md:justify-center justify-start gap-4 pt-12">
+          <>
+            {allPlans
+              .filter(
+                (p) =>
+                  p.provider === activeProvider && p.region === activeRegion
+              )
+              .map((p) => (
+                <PlanCard plan={p} key={p.id} />
+              ))}
+          </>
+        </div>
       </div>
-      <Providers
-        activeProvider={activeProvider}
-        setActiveProvider={setActiveProvider}
-      />
-      <div className="xl:max-w-4xl w-full overflow-auto px-8 md:px-4 mx-auto flex items-stretch md:justify-center justify-start gap-4 pt-12">
-        <>
-          {allPlans
-            .filter(
-              (p) => p.provider === activeProvider && p.region === activeRegion
-            )
-            .map((p) => (
-              <PlanCard plan={p} key={p.id} />
-            ))}
-        </>
-      </div>
-    </div>
+    </AnimateUp>
   );
 }
 

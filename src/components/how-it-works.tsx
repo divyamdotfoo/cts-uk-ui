@@ -1,8 +1,6 @@
-import { Underline } from "./underline-wrapper";
+import { Underline } from "./ui/underline";
 import { HowItWoksGifs } from "./how-it-works-client";
-// import Step2 from "../../public/step2.gif"
-// import Step3 from "../../public/step3.gif"
-// import Step4 from "../../public/step4.gif"
+
 export function HowItWorks() {
   return (
     <div className="text-black w-full md:pt-32 pt-20">

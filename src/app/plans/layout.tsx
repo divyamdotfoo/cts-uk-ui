@@ -6,7 +6,7 @@ import {
   EasySetup,
   EsimIconLightBlue,
 } from "@/components/svgs";
-import { Underline } from "@/components/underline-wrapper";
+import { Underline } from "@/components/ui/underline";
 import Image from "next/image";
 import React from "react";
 

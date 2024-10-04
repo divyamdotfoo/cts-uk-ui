@@ -1,5 +1,5 @@
 import { PlanData } from "@/components/plan-data";
-import { LogoMutedSmall, O2, Vodafone } from "@/components/svgs";
+import { LogoMutedSmall, Vodafone } from "@/components/svgs";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 
@@ -8,7 +8,7 @@ export default function Page() {
     <div className=" flex lg:gap-[70px] w-full">
       <div className=" hidden basis-0 lg:basis-1/3 lg:block">
         <Image
-          src={"/plan-hero.jpg"}
+          src={"/plan-hero.webp"}
           width={500}
           height={500}
           alt=""
