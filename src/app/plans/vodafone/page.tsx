@@ -8,7 +8,7 @@ export default function Page() {
     <div className=" flex lg:gap-[70px] w-full">
       <div className=" hidden basis-0 lg:basis-1/3 lg:block">
         <Image
-          src={"/plan-hero.webp"}
+          src={"/plan-hero.jpg"}
           width={500}
           height={500}
           alt=""

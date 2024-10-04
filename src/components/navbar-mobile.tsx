@@ -51,26 +51,27 @@ export function NavbarMobile() {
             <Separator className=" bg-gray-200" />
             <HamLink closeMenu={closeMenu} href={"/blogs"}>
               Blogs
-              <ChevronDown className=" w-4 h-4" />
-            </HamLink>
-            <Separator className=" bg-gray-200" />
-            <HamLink closeMenu={closeMenu} href={"/"}>
-              Coverage
-            </HamLink>
-            <Separator className=" bg-gray-200" />
-
-            <HamLink closeMenu={closeMenu} href={"/"}>
-              Networks
-            </HamLink>
-            <Separator className=" bg-gray-200" />
-            <HamLink closeMenu={closeMenu} href={"/"}>
-              Coverage
             </HamLink>
             <Separator className=" bg-gray-200" />
             <HamLink closeMenu={closeMenu} href={"/about-us"}>
               About Us
             </HamLink>
             <Separator className=" bg-gray-200" />
+            <HamLink closeMenu={closeMenu} href={"/about-us"}>
+              Help center
+            </HamLink>
+            <Separator className=" bg-gray-200" />
+            <LoginDialog>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  closeMenu();
+                }}
+                className="underline decoration-white w-full hover:decoration-inherit transition-all flex items-center gap-2"
+              >
+                Login
+              </button>
+            </LoginDialog>
           </div>
         </SheetContent>
       </Sheet>

@@ -20,6 +20,7 @@ import { useUser } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 import { InputOTP, InputOTPSlot } from "./ui/input-otp";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 export function LoginDialog({ children }: { children: React.ReactNode }) {
   const [forgotPassword, setForgotPassword] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
@@ -285,6 +286,13 @@ export function LoginDialog({ children }: { children: React.ReactNode }) {
               </span>
             )}
           </button>
+          <Link
+            href={"/register"}
+            className=" text-center pt-5 text-gray-700 text-sm"
+          >
+            New to our platform?{" "}
+            <span className=" text-bluePrimary underline">Sign up</span>
+          </Link>
         </div>
 
         {/* close */}
